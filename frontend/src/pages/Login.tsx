@@ -1,33 +1,37 @@
-import React, {SyntheticEvent, useState} from 'react';
-import {Navigate} from "react-router-dom";
+import React, {SyntheticEvent, useState, useCallback} from 'react';
+import {useNavigate} from "react-router-dom";
 
 const Login = (props: { setName: (name: string) => void }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [redirect, setRedirect] = useState(false);
+    const navigate = useNavigate();
 
-    const submit = async (e: SyntheticEvent) => {
+    const submit = useCallback(async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:8000/api/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include',
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
+        try {
+            const response = await fetch('http://localhost:8000/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
 
-        const content = await response.json();
+            if (!response.ok) {
+                throw new Error("Login failed");
+            }
 
-        setRedirect(true);
-        props.setName(content.name);
-    }
+            const content = await response.json();
 
-    if (redirect) {
-        return <Navigate to="/"/>;
-    }
+            props.setName(content.name);
+            navigate('/', { replace: true });
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    }, [email, password, navigate, props]);
 
     return (
         <form onSubmit={submit}>

@@ -18,10 +18,10 @@ const Nav = (props: { name: string, setName: (name: string) => void }) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item active">
-                    <Link to="/login" className="nav-link">Login</Link>
+                    <Link to="/login" className="nav-link navbar-brand">Login</Link>
                 </li>
                 <li className="nav-item active">
-                    <Link to="/register" className="nav-link">Register</Link>
+                    <Link to="/register" className="nav-link navbar-brand">Register</Link>
                 </li>
             </ul>
         )
