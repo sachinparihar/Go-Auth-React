@@ -1,7 +1,9 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Nav = (props: { name: string, setName: (name: string) => void }) => {
+    const navigate = useNavigate();
+
     const logout = async () => {
         await fetch('http://localhost:8000/api/logout', {
             method: 'POST',
@@ -10,6 +12,9 @@ const Nav = (props: { name: string, setName: (name: string) => void }) => {
         });
 
         props.setName('');
+
+        // Redirect to home page after logout
+        navigate('/');
     }
 
     let menu;
@@ -29,7 +34,7 @@ const Nav = (props: { name: string, setName: (name: string) => void }) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item active">
-                    <Link to="/login" className="nav-link" onClick={logout}>Logout</Link>
+                    <Link to="/" className="nav-link" onClick={logout}>Logout</Link>
                 </li>
             </ul>
         )
