@@ -7,34 +7,17 @@
 ```
 git clone https://github.com/sachinparihar/Go-Auth-React.git
 ```
-
-### Backend
-
- ```
-cd backend
 ```
-
- ```
- go run main.go
- ```
-```Dont' forget to configure database in .env file after creating mongodb database```
-
-### Frontend
-Open new terminal and paste below command:
-
-```
-cd frontend
-```
-
-```
-npm install
-```
-
-```
-npm start
+docker-compose up
 ```
 
 Paste the url: <http://localhost:3000/> in your browser
+
+## To stop the Services
+
+```
+docker-compose down
+```
 
 You will see this page:
 
