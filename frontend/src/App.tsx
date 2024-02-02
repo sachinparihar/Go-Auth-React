@@ -6,17 +6,24 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 
+
 function App() {
   const [name, setName] = useState('');
+  const [justLoggedOut, setJustLoggedOut] = useState(false);
+
+  const handleLogout = () => {
+    setName('');
+    setJustLoggedOut(true);
+  };
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Nav name={name} setName={setName} />
+        <Nav key={name} name={name} setName={handleLogout} />
 
         <main className="form-signin">
           <Routes>
-            <Route path="/" element={<Home name={name} />} />
+            <Route path="/" element={<Home name={name} justLoggedOut={justLoggedOut} />} />
             <Route path="/login" element={<Login setName={setName} />} />
             <Route path="/register" element={<Register />} />
           </Routes>
@@ -25,5 +32,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
