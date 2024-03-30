@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"log"
 	"strconv"
 	"time"
 
@@ -50,6 +51,9 @@ func Login(c *fiber.Ctx) error {
 
 	var user models.User
 	collection := database.DB.Collection("users")
+	if collection == nil {
+		log.Fatal("Failed to get collection")
+	}
 	err := collection.FindOne(context.TODO(), bson.M{"email": data["email"]}).Decode(&user)
 
 	if err != nil {

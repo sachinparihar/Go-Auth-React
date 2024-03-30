@@ -3,11 +3,12 @@ package database
 import (
 	"context"
 	"fmt"
-	config "myproject/Config"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	config "myproject/Config"
 )
 
 var DB *mongo.Database
@@ -26,7 +27,7 @@ func Connect() {
 	clientOptions := options.Client().ApplyURI(connectionString)
 
 	// Connect to MongoDB
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	client, err := mongo.Connect(ctx, clientOptions)
