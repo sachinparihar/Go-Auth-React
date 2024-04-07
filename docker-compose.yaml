@@ -1,0 +1,20 @@
+version: '3'
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - CI=true
+      - PORT=3000
+    command: npm start
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    command: ["./myproject"]
