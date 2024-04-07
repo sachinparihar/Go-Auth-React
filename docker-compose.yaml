@@ -1,27 +1,19 @@
-version: '3.8'
-
+version: '3'
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+  auth-frontend:
+    image: sachinparihar/auth-frontend:latest
     ports:
-      - 3000:3000
+      - '3000:3000'
     environment:
-      - http://localhost:8000
-    volumes:
-      - .:/app
-    depends_on:
-      - backend
+      - PORT=3000
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: go.Dockerfile
+  auth-backend:
+    image: sachinparihar/auth-backend:latest
     ports:
-      - 8000:8000
-    volumes:
-      - .:/app/backend
-
-    env_file:
-      - ./backend/.env  
+      - '8000:8000'
+    environment:
+      - DB_HOST=go-auth.mongo.cosmos.azure.com
+      - DB_PORT=10255
+      - DB_USERNAME=go-auth
+      - DB_PASSWORD=TpfiEzGIuUXfXeVHan6X99x8IU8LOsQ8LOs9Gz0ULcKbODlrgHlixOrmDJmkk89z531u31U19pAjACDbGeCpPw==
+      - DB_NAME=go-auth

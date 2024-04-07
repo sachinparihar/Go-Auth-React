@@ -31,22 +31,22 @@ const Nav = (props: { name: string, setName: (name: string) => void }) => {
     if (props.name === '') {
         menu = (
             <ul className="newnav">
-                <li><Link to="/" className="active">Sata 🏡</Link></li>
+                <li><Link to="/" className="active">Sata <span role="img" aria-label="house">🏡</span></Link></li>
                 <li><Link to="/charts">Chart</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/login">Login</Link></li>
             </ul>
         )
-    } else {
-        menu = (
-            <ul className="newnav">
-                <li><Link to="/" className="active">Sata 🏡</Link></li>
-                <li><Link to="/charts">Chart</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
-                <li><Link to="/logout" onClick={logout}>Logout</Link></li>
-            </ul>
-        )
-    }
+        } else {
+            menu = (
+                <ul className="newnav">
+                    <li><Link to="/" className="active">Sata <span role="img" aria-label="house">🏡</span></Link></li>
+                    <li><Link to="/charts">Chart</Link></li>
+                    <li><Link to="/contact">Contact</Link></li>
+                    <li><Link to="/logout" onClick={logout}>Logout</Link></li>
+                </ul>
+            )
+        }
 
     return (
         <section className="topboxnew">

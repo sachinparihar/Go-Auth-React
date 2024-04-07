@@ -111,10 +111,10 @@ const Home = (props: {
           <div className="card-body" style={{ boxSizing: 'border-box', flex: '1 1 auto', minHeight: '1px', paddingLeft: '0.5rem', paddingRight: '0.5rem', paddingTop: '1rem', paddingBottom: '1rem', border: 'dashed red', background: 'linear-gradient(to bottom, #ffd800, #ffffff)', borderRadius: '20px', fontWeight: 'bold', marginTop: '5px', marginBottom: '5px' }}>
             <p><strong>--सीधे सट्टा कंपनी का No 1 खाईवाल--</strong></p>
             <p><strong>♕♕&nbsp;MONU&nbsp;BHAI&nbsp;KHAIWAL ♕♕</strong></p>
-            <p><strong>⏰ दिल्ली किंग्स ------------ 7:30 PM</strong></p>
-            <p><strong>⏰ हिमाचल --------------- 3:50 PM</strong></p>
-            <p><strong>⏰ विजय लक्ष्मी ----------- 12:40 PM</strong></p>
-            <p><strong>⏰ दुबई किंग्स --------------- 5:15  PM</strong></p>
+            <p><strong><span role="img" aria-label="clock">⏰</span> दिल्ली किंग्स ------------ 7:30 PM</strong></p>
+            <p><strong><span role="img" aria-label="clock">⏰</span> हिमाचल --------------- 3:50 PM</strong></p>
+            <p><strong><span role="img" aria-label="clock">⏰</span> विजय लक्ष्मी ----------- 12:40 PM</strong></p>
+            <p><strong><span role="img" aria-label="clock">⏰</span> दुबई किंग्स --------------- 5:15  PM</strong></p>
             <p><a href="https://wa.me/+917015441836"><img loading="lazy" src="https://res.cloudinary.com/dnxbhtahw/image/upload/v1670936612/api7-assets/whatsapp-footer_1_o02ejp.png" width="200px" height="69px" alt="Whatsapp to show game on this website" /></a></p>
           </div>
         </div>
