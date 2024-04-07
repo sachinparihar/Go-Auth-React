@@ -1,51 +1,30 @@
 # syntax=docker/dockerfile:1.4
 
-# 1. For build React app
-FROM node:16 AS development
+# 1. Build React app
+FROM node:16 AS build
 
 # Set working directory
 WORKDIR /app
 
-# 
-COPY package.json /app/package.json
-COPY package-lock.json /app/package-lock.json
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Same as npm install
+# Install dependencies
 RUN npm install --force
 
-COPY . /app
+# Copy the rest of your app's source code
+COPY . .
 
-ENV CI=true
-ENV PORT=3000
-
-CMD [ "npm", "start" ]
-
-FROM development AS build
-
+# Build the app
 RUN npm run build
 
-
-FROM development as dev-envs
-RUN <<EOF
-apt-get update
-apt-get install -y --no-install-recommends git
-EOF
-
-RUN <<EOF
-useradd -s /bin/bash -m vscode
-groupadd docker
-usermod -aG docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-CMD [ "npm", "start" ]
-
-# 2. For Nginx setup
+# 2. Setup Nginx
 FROM nginx:alpine
 
-# Copy config nginx
+# Copy Nginx configuration
 COPY --from=build /app/.nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
+# Set working directory
 WORKDIR /usr/share/nginx/html
 
 # Remove default nginx static assets
