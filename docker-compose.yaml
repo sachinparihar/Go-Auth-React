@@ -11,9 +11,4 @@ services:
     image: sachinparihar/auth-backend:latest
     ports:
       - '8000:8000'
-    environment:
-      - DB_HOST=go-auth.mongo.cosmos.azure.com
-      - DB_PORT=10255
-      - DB_USERNAME=go-auth
-      - DB_PASSWORD=TpfiEzGIuUXfXeVHan6X99x8IU8LOsQ8LOs9Gz0ULcKbODlrgHlixOrmDJmkk89z531u31U19pAjACDbGeCpPw==
-      - DB_NAME=go-auth
+   
