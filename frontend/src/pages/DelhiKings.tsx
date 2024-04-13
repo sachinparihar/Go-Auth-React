@@ -8,16 +8,10 @@ const DelhiKingsForm = (props: { isLoggedIn: boolean, delhiKingsData: { number: 
   const [number, setNumber] = useState('');
   const [date, setDate] = useState('');
 
-  const [currentNumber, setCurrentNumber] = useState<number | null>(() => JSON.parse(localStorage.getItem('delhiKingsCurrentNumber') || 'null'));
-  const [previousNumber, setPreviousNumber] = useState<number | null>(() => JSON.parse(localStorage.getItem('delhiKingsPreviousNumber') || 'null'));
-  const [isWaitImageVisible, setIsWaitImageVisible] = useState(() => JSON.parse(localStorage.getItem('isWaitImageVisible') || 'false'));
+  const [currentNumber, setCurrentNumber] = useState<number | null>(null);
+  const [previousNumber, setPreviousNumber] = useState<number | null>(null);
+  const [isWaitImageVisible, setIsWaitImageVisible] = useState(false);
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null); // Create a ref for the timeout ID
-
-  useEffect(() => {
-    localStorage.setItem('delhiKingsCurrentNumber', JSON.stringify(currentNumber));
-    localStorage.setItem('delhiKingsPreviousNumber', JSON.stringify(previousNumber));
-    localStorage.setItem('isWaitImageVisible', JSON.stringify(isWaitImageVisible));
-  }, [currentNumber, previousNumber, isWaitImageVisible]);
 
   const [modalIsOpen, setIsOpen] = useState(false);
   function openModal() {
@@ -49,13 +43,14 @@ const DelhiKingsForm = (props: { isLoggedIn: boolean, delhiKingsData: { number: 
     event.preventDefault();
   
     const formattedDate = `${date}T00:00:00Z`;
-  
     const numberValue = Number(number);
   
     // Clear the timeout and hide the wait image when a new number is added
     if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
     setIsWaitImageVisible(false);
   
+    console.log({ number: numberValue, date: formattedDate }); // Add this line to log the data
+
     axios.post('http://localhost:8000/api/postdelhiking', { number: numberValue, date: formattedDate }) // Replace with Delhi Kings API endpoint
     .then(response => {
       console.log(response.data);

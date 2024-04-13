@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -15,22 +16,29 @@ func DelhiKing(c *fiber.Ctx) error {
 	var data models.DelhiKing
 
 	if err := c.BodyParser(&data); err != nil {
+		fmt.Printf("Error parsing body: %v\n", err) // Log the error
 		return err
 	}
 
+	fmt.Printf("Received data: %+v\n", data) // Log the received data
+
 	collection := database.DB.Collection("delhikings")
 
-	_, err := collection.InsertOne(context.TODO(), bson.M{
+	insertResult, err := collection.InsertOne(context.TODO(), bson.M{
 		"number": data.Number,
-		"date":   data.Date, // Use the date directly
+		"date":   data.Date,
 	})
 
 	if err != nil {
+		fmt.Printf("Error inserting data: %v\n", err) // Log the error
 		c.Status(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"message": "could not insert data",
 		})
 	}
+
+	fmt.Printf("Inserted a single document: %v\n", insertResult.InsertedID) // Log the insert result
+
 	return c.JSON(fiber.Map{
 		"message": "success",
 	})

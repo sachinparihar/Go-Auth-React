@@ -15,7 +15,6 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
-		AllowOrigins:     "https://satas.azurewebsites.net",
 	}))
 
 	routes.Setup(app)

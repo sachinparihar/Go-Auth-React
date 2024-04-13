@@ -20,8 +20,6 @@ const Login = (props: { setName: (name: string) => void }) => {
                 })
             });
 
-            console.log('Response status:', response.status);
-
             if (!response.ok) {
                 throw new Error("Login failed");
             }
@@ -30,14 +28,14 @@ const Login = (props: { setName: (name: string) => void }) => {
 
             console.log('Response content:', content);
 
+            // handle successful login
+            // navigate to another page or set some state
             props.setName(content.name);
-            localStorage.setItem('isLoggedIn', 'true');
-            navigate('/', { replace: true });
-        } catch (error) {
-            console.error("An error occurred:", error);
+            navigate('/');
+        } catch (err) {
+            console.error('An error occurred:', err);
         }
     }, [email, password, navigate, props]);
-
     return (
         <body className='bodyClass' >
             <section className="sattalogo">

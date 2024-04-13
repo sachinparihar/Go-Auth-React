@@ -92,7 +92,8 @@ const Home = (props: {
           <tbody>
 
             <tr className='table-delhi colored-cell'>
-              <DelhiKingsForm isLoggedIn={isLoggedIn} delhiKingsData={props.delhiKingsNumbers} setDelhiKingsData={props.setDelhiKingsNumbers} />            </tr>
+              <DelhiKingsForm isLoggedIn={isLoggedIn} delhiKingsData={props.delhiKingsNumbers} setDelhiKingsData={props.setDelhiKingsNumbers} /> 
+            </tr>
             <tr className='table-vijay colored-cell'>
               <VijayLaxmiForm isLoggedIn={isLoggedIn} vijayLaxmiData={props.vijayLaxmiNumbers} setVijayLaxmiData={props.setVijayLaxmiNumbers} />
             </tr>
