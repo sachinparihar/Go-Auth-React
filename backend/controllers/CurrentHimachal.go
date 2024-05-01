@@ -11,17 +11,18 @@ import (
 	"myproject/models"
 )
 
-func VijayLaxmi12_40(c *fiber.Ctx) error {
-	var data models.VijayLaxmi12_40
+func CurrentHimachal(c *fiber.Ctx) error {
+	var data models.CurrentHimachal
 
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
 
-	collection := database.DB.Collection("vijaylaxmi12_40")
+	collection := database.DB.Collection("currentHimachals")
+
 	_, err := collection.InsertOne(context.TODO(), bson.M{
 		"number": data.Number,
-		"date":   data.Date,
+		"date":   data.Date, // Use the date directly
 	})
 
 	if err != nil {
@@ -30,22 +31,21 @@ func VijayLaxmi12_40(c *fiber.Ctx) error {
 			"message": "could not insert data",
 		})
 	}
-
 	return c.JSON(fiber.Map{
 		"message": "success",
 	})
 }
 
-type VijayLaxmi12_40Response struct {
+type CurrentHimachalResponse struct {
 	Number int    `json:"number"`
 	Date   string `json:"date"`
 }
 
-func GetVijayLaxmi12_40s(c *fiber.Ctx) error {
-	collection := database.DB.Collection("vijaylaxmi12_40s")
+func GetCurrentHimachals(c *fiber.Ctx) error {
+	collection := database.DB.Collection("currentHimachals") // Adjusted to currentHimachals
 
 	findOptions := options.Find()
-	var results []VijayLaxmi12_40Response
+	var results []CurrentHimachalResponse
 
 	cur, err := collection.Find(context.TODO(), bson.D{{}}, findOptions)
 	if err != nil {
@@ -56,7 +56,7 @@ func GetVijayLaxmi12_40s(c *fiber.Ctx) error {
 	}
 
 	for cur.Next(context.TODO()) {
-		var elem models.VijayLaxmi12_40
+		var elem models.CurrentHimachal
 		err := cur.Decode(&elem)
 		if err != nil {
 			c.Status(fiber.StatusInternalServerError)
@@ -66,9 +66,9 @@ func GetVijayLaxmi12_40s(c *fiber.Ctx) error {
 		}
 
 		// Format the date and append to results
-		results = append(results, VijayLaxmi12_40Response{
+		results = append(results, CurrentHimachalResponse{
 			Number: elem.Number,
-			Date:   elem.Date.Format("2006-01-02"),
+			Date:   elem.Date.Format("02-01-2006"), // Format the date to "DD-MM-YYYY"
 		})
 	}
 

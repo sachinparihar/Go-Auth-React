@@ -215,8 +215,17 @@ body {
   background: #000;
   border: 1px solid #000;
   padding: 25px 0;
+  margin: 0;
+  margin-bottom: 0; /* No bottom margin */
   color: #ffd800;
+}
 
+.circlebox2 {
+  background: #000;
+  margin: 0; /* Ensure no top margin is creating the gap */
+  min-width: 3rem;
+  padding: 0 0 20px;
+  text-align: center;
 }
 
 .row {
@@ -241,13 +250,7 @@ body {
   width: 100%
 }
 
-.circlebox2 {
-  background: #000;
-  margin: 0;
-  min-width: 3rem;
-  padding: 0 0 20px;
-  text-align: center
-}
+
 
 .sattaname {
   color: #fff;

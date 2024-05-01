@@ -34,17 +34,22 @@ type Himachal struct {
 	Date   time.Time `json:"date"`
 }
 
-type DelhiKing7_30 struct {
+type CurrentDelhiKing struct {
 	Number int       `json:"number"`
 	Date   time.Time `json:"date"`
 }
 
-type Dubai5_15 struct {
+type CurrentDubai struct {
 	Number int       `json:"number"`
 	Date   time.Time `json:"date"`
 }
 
-type VijayLaxmi12_40 struct {
+type CurrenVijayLaxmi struct {
+	Number int       `json:"number"`
+	Date   time.Time `json:"date"`
+}
+
+type CurrentHimachal struct {
 	Number int       `json:"number"`
 	Date   time.Time `json:"date"`
 }

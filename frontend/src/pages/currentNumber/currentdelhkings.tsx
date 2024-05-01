@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import waitImage from './img/wait.gif';
+import waitImage from './image.gif'; 
 import Modal from 'react-modal';
 
-const DelhiKingsForm = (props: { isLoggedIn: boolean; delhiKingsData: { number: number; date: string; }[]; setDelhiKingsData: React.Dispatch<React.SetStateAction<{ number: number; date: string; }[]>>; }) => {
+const CurrentDelhiKings = (props: { isLoggedIn: boolean, currentDelhiKingsData: { number: number; date: string; }[], setCurrentDelhiKingsData: React.Dispatch<React.SetStateAction<{ number: number; date: string; }[]>> }) => {
   const [number, setNumber] = useState('');
   const [date, setDate] = useState('');
 
   const [currentNumber, setCurrentNumber] = useState<number | null>(() => JSON.parse(localStorage.getItem('delhiCurrentNumber') || 'null'));
   const [previousNumber, setPreviousNumber] = useState<number | null>(() => JSON.parse(localStorage.getItem('delhiPreviousNumber') || 'null'));
   const [isWaitImageVisible, setIsWaitImageVisible] = useState(() => JSON.parse(localStorage.getItem('delhiIsWaitImageVisible') || 'false'));
-  const timeoutIdRef = useRef<NodeJS.Timeout | null>(null); // Create a ref for the timeout ID
+  const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     localStorage.setItem('delhiCurrentNumber', JSON.stringify(currentNumber));
@@ -27,14 +27,14 @@ const DelhiKingsForm = (props: { isLoggedIn: boolean; delhiKingsData: { number: 
     setIsOpen(false);
   }
   
-  const { setDelhiKingsData } = props;
+  const { setCurrentDelhiKingsData } = props;
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/getdelhikings') // Replace with Delhi Kings API endpoint
+    axios.get('http://localhost:8000/api/getcurrentdelhikings')
       .then(response => {
         const data = response.data;
-        setDelhiKingsData(data);
-
+        setCurrentDelhiKingsData(data);
+    
         setCurrentNumber(data.length > 0 ? data[data.length - 1].number : null);
         setPreviousNumber(data.length > 1 ? data[data.length - 2].number : null);
         setIsWaitImageVisible(true);
@@ -42,50 +42,47 @@ const DelhiKingsForm = (props: { isLoggedIn: boolean; delhiKingsData: { number: 
       .catch(error => {
         console.error('There was an error!', error);
       });
-  }, [setDelhiKingsData]);
+  }, [setCurrentDelhiKingsData]);
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-
+  
     const formattedDate = `${date}T00:00:00Z`;
-
     const numberValue = Number(number);
-
-    // Clear the timeout and hide the wait image when a new number is added
-    if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+  
+    setPreviousNumber(currentNumber);
+    setCurrentNumber(numberValue);
     setIsWaitImageVisible(false);
-
-    axios.post('http://localhost:8000/api/postdelhiking', { number: numberValue, date: formattedDate }) // Replace with Delhi Kings API endpoint
-      .then(response => {
-        console.log(response.data);
-
-        props.setDelhiKingsData(prevDelhiKingsData => Array.isArray(prevDelhiKingsData) ? [{ number: numberValue, date: formattedDate }, ...prevDelhiKingsData] : [{ number: numberValue, date: formattedDate }]);
-        setNumber('');
-        setDate('');
-
-        // Schedule the timeout to display the wait image after 15 seconds
-        timeoutIdRef.current = setTimeout(() => {
-          setIsWaitImageVisible(true);
-        }, 15 * 1000);
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-        console.log(error.response);
-      });
+  
+    axios.post('http://localhost:8000/api/postcurrentdelhiking', { number: numberValue, date: formattedDate })
+    .then(response => {
+      console.log(response.data);
+  
+      props.setCurrentDelhiKingsData(prevData => Array.isArray(prevData) ? [{ number: numberValue, date: formattedDate }, ...prevData] : [{ number: numberValue, date: formattedDate }]);
+      setNumber('');
+      setDate('');
+  
+      timeoutIdRef.current = setTimeout(() => {
+        setIsWaitImageVisible(true);
+      }, 15 * 1000);
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+      console.log(error.response);
+    });
   };
 
   return (
     <>
-      <td className="table-delhi" style={{ backgroundColor: '#ffd800' }}>DELHI KING<br />7:30 PM</td>
-      <td className="table-numberdate">{previousNumber}</td>
-      <td className="table-numberdate">{isWaitImageVisible ? <img src={waitImage} alt="Wait" /> : currentNumber}</td>        
+      <p className="table-delhi" style={{ backgroundColor: 'black', alignContent: 'center', alignItems: 'center' }}>DELHI KING</p>
+      <p className="table-numberdate">{isWaitImageVisible ? <img src={waitImage} alt="Wait" /> : currentNumber}</p>        
       {props.isLoggedIn && (
         <>
-          <button onClick={openModal}style={{fontWeight:'bold', background: '#ffd800', borderRadius: '5px'}}>ADD</button>
+          <button onClick={openModal} style={{fontWeight:'bold', background: '#ffd800', borderRadius: '5px'}}>ADD</button>
           <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            contentLabel="Add Number Modal"
+            contentLabel="Add Current Number Modal"
           >
             <form onSubmit={handleSubmit} className="input-form">
               <label>
@@ -106,4 +103,4 @@ const DelhiKingsForm = (props: { isLoggedIn: boolean; delhiKingsData: { number: 
   );
 };
 
-export default DelhiKingsForm;
+export default CurrentDelhiKings;

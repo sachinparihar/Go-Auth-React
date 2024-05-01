@@ -11,14 +11,14 @@ import (
 	"myproject/models"
 )
 
-func DelhiKing7_30(c *fiber.Ctx) error {
-	var data models.DelhiKing7_30
+func CurrentVijayLaxmi(c *fiber.Ctx) error {
+	var data models.CurrenVijayLaxmi
 
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
 
-	collection := database.DB.Collection("delhiking7_30")
+	collection := database.DB.Collection("vijaylaxmi12_40")
 	_, err := collection.InsertOne(context.TODO(), bson.M{
 		"number": data.Number,
 		"date":   data.Date,
@@ -36,16 +36,16 @@ func DelhiKing7_30(c *fiber.Ctx) error {
 	})
 }
 
-type DelhiKing7_30Response struct {
+type VijayLaxmi12_40Response struct {
 	Number int    `json:"number"`
 	Date   string `json:"date"`
 }
 
-func GetDelhiKing7_30s(c *fiber.Ctx) error {
-	collection := database.DB.Collection("delhiking7_30s")
+func GetCurrentVijayLaxmi(c *fiber.Ctx) error {
+	collection := database.DB.Collection("vijaylaxmi12_40s")
 
 	findOptions := options.Find()
-	var results []DelhiKing7_30Response
+	var results []VijayLaxmi12_40Response
 
 	cur, err := collection.Find(context.TODO(), bson.D{{}}, findOptions)
 	if err != nil {
@@ -56,7 +56,7 @@ func GetDelhiKing7_30s(c *fiber.Ctx) error {
 	}
 
 	for cur.Next(context.TODO()) {
-		var elem models.DelhiKing7_30
+		var elem models.CurrenVijayLaxmi
 		err := cur.Decode(&elem)
 		if err != nil {
 			c.Status(fiber.StatusInternalServerError)
@@ -66,7 +66,7 @@ func GetDelhiKing7_30s(c *fiber.Ctx) error {
 		}
 
 		// Format the date and append to results
-		results = append(results, DelhiKing7_30Response{
+		results = append(results, VijayLaxmi12_40Response{
 			Number: elem.Number,
 			Date:   elem.Date.Format("2006-01-02"),
 		})

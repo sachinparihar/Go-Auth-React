@@ -4,6 +4,10 @@ import VijayLaxmiForm from './VijayLaxmi';
 import DubaiKingForm from './DubaiKing'; // Import DubaiKingForm
 import HimachalForm from './Himachal'; // Import HimachalForm
 import DelhiKingsForm from './DelhiKings';
+import CurrentDelhiKings from './currentNumber/currentdelhkings';
+import CurrentDubaiKings from './currentNumber/currentdubaiking';
+import CurrentHimachalKings from './currentNumber/currenthimachal';
+import CurrentVijayLaxmi from './currentNumber/currentvijaylaxmi';
 
 
 
@@ -63,11 +67,20 @@ const Home = (props: {
                 <div style={{ display: "block" }} className="blur ">
                   {currentDate.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}          </div>
                 <p style={{ padding: "0" }} className="hintext ">हा भाई यही आती हे सबसे पहले खबर रूको और देखो</p>
-              </div>
-              <div style={{ padding: "0" }} className="sattaname ">
 
               </div>
+              
+              <div style={{ padding: "0" }} className="sattaname ">
+                <div style={{backgroundColor:'black', alignContent: 'center', alignSelf: 'center'}}>
+              <CurrentDelhiKings isLoggedIn={isLoggedIn} currentDelhiKingsData={props.delhiKingsNumbers} setCurrentDelhiKingsData={props.setDelhiKingsNumbers} />
+              <CurrentDubaiKings isLoggedIn={isLoggedIn} currentDubaiKingsData={props.dubaiKingNumbers} setCurrentDubaiKingsData={props.setDubaiKingNumbers} />
+              <CurrentHimachalKings isLoggedIn={isLoggedIn} currentHimachalKingsData={props.himachalDates} setCurrentHimachalKingsData={props.setHimachalDates} />
+              <CurrentVijayLaxmi isLoggedIn={isLoggedIn} currentVijayLaxmiData={props.vijayLaxmiNumbers} setCurrentVijayLaxmiData={props.setVijayLaxmiNumbers} />
+              </div>
+              </div>
+              
             </div>
+
           </div>
 
 

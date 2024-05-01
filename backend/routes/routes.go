@@ -25,4 +25,16 @@ func Setup(app *fiber.App) {
 	app.Post("/api/postdubaiking", controllers.DubaiKing)    // New route
 	app.Get("/api/getdubaikings", controllers.GetDubaiKings) // New route
 
+	app.Post("/api/postcurrentdelhiking", controllers.CurrentDelhiKing)   // New route
+	app.Get("/api/getcurrentdelhikings", controllers.GetCurrentDelhiKing) // New route
+
+	app.Post("/api/postcurrentdubaiking", controllers.CurrentDubai)       // New route
+	app.Get("/api/getcurrentdubaikings", controllers.GetCurrentDubaiKing) // New route
+
+	app.Post("/api/postcurrentvijaylaxmi", controllers.CurrentVijayLaxmi)   // New route
+	app.Get("/api/getcurrentvijaylaxmis", controllers.GetCurrentVijayLaxmi) // New route
+
+	app.Post("/api/postcurrenthimachal", controllers.CurrentHimachal)    // New route
+	app.Get("/api/getcurrenthimachals", controllers.GetCurrentHimachals) // New route
+
 }
